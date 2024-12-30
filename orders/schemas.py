@@ -1,10 +1,8 @@
-# from sqlalchemy import Column, Integer, String, Float, Enum, create_engine
-# from sqlalchemy.ext.declarative import declarative_base
+# from sqlalchemy import Column, Integer, String, Float, Enum
+# from core.models.base import Base
 # from sqlalchemy.orm import sessionmaker
 # import enum
 #
-# # Создаем базовый класс для моделей
-# Base = declarative_base()
 #
 # # Перечисление для статусов заказа
 # class OrderStatus(enum.Enum):

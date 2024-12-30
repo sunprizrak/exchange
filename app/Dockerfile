@@ -11,13 +11,13 @@ RUN apk update && apk add postgresql-dev postgresql-client gcc python3-dev musl-
 
 # install dependencies
 RUN pip install --upgrade pip
-COPY ./requirements.txt .
+COPY requirements.txt .
 RUN pip install -r requirements.txt
 
 # copy entrypoint.sh
-COPY ./entrypoint.sh /usr/src/web
+COPY entrypoint.sh /usr/src/web
 
 # copy project
-COPY . .
+COPY .. .
 
 ENTRYPOINT ["sh", "/usr/src/web/entrypoint.sh"]
