@@ -1,9 +1,6 @@
-from typing import TYPE_CHECKING
-
+from typing import TYPE_CHECKING, Annotated
 from fastapi import Depends
 from fastapi_users.authentication.strategy.db import DatabaseStrategy
-from sqlalchemy.sql.annotation import Annotated
-
 from .access_tokens import get_access_tokens_db
 from core.config import settings
 
@@ -14,7 +11,7 @@ if TYPE_CHECKING:
 
 def get_database_strategy(
     access_tokens_db: Annotated[
-        AccessTokenDatabase["AccessToken"],
+        "AccessTokenDatabase[AccessToken]",
         Depends(get_access_tokens_db),
     ]
 ) -> DatabaseStrategy:

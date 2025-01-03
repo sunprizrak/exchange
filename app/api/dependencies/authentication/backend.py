@@ -1,4 +1,4 @@
-from fastapi_users.authentication import AuthenticationBackend, BearerTransport,JWTStrategy
+from fastapi_users.authentication import AuthenticationBackend
 
 from .strategy import get_database_strategy
 from core.authentication.transport import bearer_transport

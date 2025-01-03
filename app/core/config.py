@@ -1,8 +1,9 @@
 from pathlib import Path
-from os import getenv
-
+import os
 from pydantic import BaseModel, PostgresDsn
 from pydantic_settings import BaseSettings, SettingsConfigDict
+
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 class RunConfig(BaseModel):
@@ -12,12 +13,20 @@ class RunConfig(BaseModel):
 
 class ApiV1Prefix(BaseModel):
     prefix: str = "/v1"
+    auth: str = "/auth"
     users: str = "/users"
 
 
 class ApiPrefix(BaseModel):
     prefix: str = "/api"
     v1: ApiV1Prefix = ApiV1Prefix()
+
+    @property
+    def bearer_token_url(self) -> str:
+        # api/v1/auth/login
+        parts = (self.prefix, self.vq.prefix, self.v1.auth, "/login")
+        path = "".join(parts)
+        return path.removeprefix("/")
 
 
 class DatabaseConfig(BaseModel):
@@ -44,7 +53,7 @@ class AccessToken(BaseModel):
 
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(
-        env_file=(".env.template", ".env"),
+        env_file=(os.path.join(BASE_DIR, ".env.template"), os.path.join(BASE_DIR, ".env")),
         case_sensitive=False,
         env_nested_delimiter="__",
         env_prefix="APP_CONFIG__",
@@ -53,7 +62,6 @@ class Settings(BaseSettings):
     api: ApiPrefix = ApiPrefix()
     db: DatabaseConfig
     access_token: AccessToken
-
 
 
 settings = Settings()
