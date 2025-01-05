@@ -1,3 +1,4 @@
+import logging
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 import uvicorn
@@ -5,6 +6,10 @@ from core.config import settings
 from core.models import db_helper
 from api import router as api_router
 
+logging.basicConfig(
+    # level=logging.INFO
+    format=settings.logging.log_format,
+)
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
