@@ -51,6 +51,14 @@ class AccessToken(BaseModel):
     verification_token_secret: str
 
 
+class SuperUser(BaseModel):
+    default_email: str
+    default_password: str
+    default_is_active: bool = True
+    default_is_superuser: bool = True
+    default_is_verified: bool = True
+
+
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(
         env_file=(os.path.join(BASE_DIR, ".env.template"), os.path.join(BASE_DIR, ".env")),
@@ -62,6 +70,7 @@ class Settings(BaseSettings):
     api: ApiPrefix = ApiPrefix()
     db: DatabaseConfig
     access_token: AccessToken
+    admin: SuperUser
 
 
 settings = Settings()
