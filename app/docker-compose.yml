@@ -1,12 +1,10 @@
 services:
 #    web:
 #        build:
-#            context: ..
-#        command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+#            context: .
+#        command: uvicorn main:main_app --host 0.0.0.0 --port 8000 --reload
 #        ports:
 #            - "8000:8000"
-#        env_file:
-#            - .env
 #        depends_on:
 #            - db
 #        volumes:
@@ -21,14 +19,5 @@ services:
             POSTGRES_PASSWORD: postgres
         volumes:
             - postgres_data:/var/lib/postgresql/data/
-
-    pgadmin:
-        image: dpage/pgadmin4
-        environment:
-            PGADMIN_DEFAULT_EMAIL: admin@admin.admin
-            PGADMIN_DEFAULT_PASSWORD: admin
-            PGADMIN_CONFIG_SERVER_MODE: 'False'
-        ports:
-            - "5050:80"
 volumes:
     postgres_data:
