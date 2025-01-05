@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from api.dependencies.authentication.backend import authentication_backend
+from api.dependencies.authentication import authentication_backend
 from core.config import settings
 from api.api_v1.fastapi_users import fastapi_users
 from core.schemas.user import UserRead, UserCreate
@@ -13,8 +13,10 @@ router = APIRouter(
 # /login
 # /logout
 router.include_router(
-    router=fastapi_users.get_auth_router(authentication_backend),
-    requires_verification=True,
+    router=fastapi_users.get_auth_router(
+        authentication_backend,
+        requires_verification=True,
+    ),
 )
 
 # /register
